@@ -1,0 +1,5 @@
+Dear Editor
+
+Please consider the manuscript "Forecasting atmospheric radiocarbon decline to pre-bomb values" for potential publication in Radiocarbon. This manuscript was recently presented at the 2017 Radiocarbon in the Environment Conference held in Debrecen, Hungary. 
+
+In this manuscript I present an analysis of the trend and seasonality of atmospheric radiocarbon for different hemispheres and forecast the probability of returning to pre-1950 levels. The approach presented here shows properties of the rate of change and seasonality of the time series not obvious from previous analyses because I tested a total of 30 different methods of time series decomposition. Furthermore, the forecast of the series shows important differences in future trajectories for different hemispheres and the potential to return to pre-1950 radiocarbon values within the next years. This has important implications for a wide scientific community that includes atmospheric scientists, biogeochemists, Earth system modelers, archeologists, among others. 

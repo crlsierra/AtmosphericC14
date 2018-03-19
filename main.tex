@@ -1,0 +1,159 @@
+% !TEX root = Radiocarbon.tex
+
+\section{Introduction}
+In the early 1950s Hans Suess described a significant decrease in the radiocarbon content of the atmosphere due to the combustion of fossil fuels, which contain virtually no radiocarbon and therefore dilute atmospheric $^{14}$C relative to $^{12}$C \citep{Suess1953, Suess1955Sci}. This trend changed dramatically in the late 1950s and early 1960s when nuclear-bomb tests increased atmospheric radiocarbon content to levels not ever seen before in the last 50,000 years of Earth's history. Since then, radiocarbon content have been declining globally as evidenced by data from tree-rings and more recent direct atmospheric observations \citep{Tans1979Nature, Manning1990, Levin1989Radiocarbon, Currie2011, Graven2012JGR, Hua2013Radiocarbon, Levin2013Tellus}.
+
+Using a simple box model of the global carbon cycle, \citet{Caldeira1998GRL} predicted that atmospheric radiocarbon content will continue a negative rate of decline until the beginning of the 21st century and will return to pre-1950 values around the year 2020. More recently, \citet{Graven2015PNAS} predicted a similar time for returning to pre-1950s values, but with different trajectories according to different fossil-fuel emission scenarios. This point, where $\Delta^{14}$C values go from positive to negative, indicate a transition where fossil-fuel derived CO$_2$ dominates the atmospheric signal of radiocarbon, previously dominated by bomb-derived radiocarbon. 
+
+Determining this transition point in atmospheric radiocarbon is important for different reasons. For instance, a) it helps to determine the impact of fossil fuel emissions on the global carbon cycle \citep{Caldeira1998GRL, Turnbull2009JGR, Graven2015PNAS}, b) it serves as an important benchmark for global carbon models since the rate of radiocarbon decline is the result of different processes rates in global C reservoirs, and appropriate representation of these processes in models must predict accurately this transition point \citep{Oeschger1975Tellus, Randerson2002GBC, Naegler2006}, and c) it sets a new reference point for dating organic material of interest in biology, biogeochemistry, forensics and archeology \citep{Graven2015PNAS}. 
+
+Post-bomb atmospheric radiocarbon data for different hemispheric zones have been compiled and homogenized  by \cite{Hua2013Radiocarbon}, harmonizing measurements from tree-rings \citep[e.g.][]{Hertelendi1983, Levin1997, Hua2000, Park2002, Yamada2005, Hua2012GRL, Rakowski2013} and direct atmospheric observations \citep[e.g.][]{Vogel1971, Berger1987, Manning1990, Nydal1996, Levin2004, Meijer2006, Turnbull2007, Levin2010Tellus, Currie2011, Graven2012JGR} (Figure \ref{fig:HuaSeries}). These hemispheric `bomb curves' contain very useful information on the trend and seasonality of atmospheric radiocarbon for different hemispheric regions. Furthermore, this information can be used to forecast future trends in atmospheric radiocarbon and determine the possible transition date to pre-1950 levels.
+
+%Previous analysis using radiocarbon in CO$_2$ from individual stations, have shown important inter-hemispheric differences in the trend and seasonality of $\Delta^{14}$C values, helping to identify contributions from the main global sources and sinks of carbon, as well as helping to determine the strength of the interhemispheric gradient \citep{Levin2010Tellus, Graven2012JGR}. 
+
+Compiled atmospheric radiocarbon curves are only released to the scientific community at irregular intervals \citep{Hua2004, Hua2013Radiocarbon}, and there is a need to produce forecasts of these curves for periods not covered by the compiled curves. For instance, radiocarbon dating methods or analyses of cycling rates in carbon reservoirs using samples from recently collected material require best estimates 
+of the atmospheric radiocarbon values for time intervals after the latests release of the compiled radiocarbon curves \citep{SierraGMD14} . For this reason, it is important to provide robust statistical methods for forecasting that can provide accurate predictions. 
+
+Here I present a time-series decomposition analysis for the atmospheric radiocarbon curves of \citet{Hua2013Radiocarbon}, fitting a set of exponential smoothing state-space models with the aim to forecast future trends in radiocarbon at hemispheric scales. The main objectives of this analysis are, a) to decompose the observed time series into trend and seasonal components and characterize differences among hemispheric zones, and b) to identify the probability of returning to pre-bomb radiocarbon values; i.e. $\Delta^{14}$C $\leq 0 \permil$. Additionally, I present radiocarbon measurements of plants from different cities to identify the degree at which, by local dilution, atmospheric radiocarbon has already crossed this threshold. 
+
+%\begin{figure}[htbp]
+%   \centering
+%   \includegraphics[scale=0.7]{Figures/HuaSeries} % requires the graphicx package
+%   \caption{Atmospheric radiocarbon for four atmospheric regions. a) Original data from \citet{Hua2013Radiocarbon}, b) time series constructed from original data for the period 1975 to 2010.}
+%   \label{fig:HuaSeries}
+%\end{figure}
+
+
+\section{Methods}
+\subsection{Time series decomposition} 
+I used the harmonized atmospheric radiocarbon time series reported by \citet{Hua2013Radiocarbon} for the northern and southern hemispheres. Although these authors present curves for four different hemispheric zones, the curves only deviate from each other during
+the early bomb period. Here, I used data from the year 1975 to 2010, where intra-hemispheric differences are not reported, and only
+the northern and the southern hemispheres are differentiated. 
+
+These hemispheric radiocarbon time-series are not available at regularly spaced intervals as required by the time-series analysis used here; therefore, they were homogenized in regular monthly and seasonal periods by cubic spline interpolation (Figure \ref{fig:HuaSeries}b).
+
+To analyze each time series, I used the ETS framework described by \citet{Hyndman2008} to fit 30 different exponential smoothing state-space models that decompose the series in the error (E), trend (T), and seasonal (S) components (ETS decomposition). In classical time-series decomposition methods, trend, seasonality and error are commonly assumed as linear additive terms \citep[e.g.][]{Cleveland1983}, which in the ETS framework imply a model of the form E+T+S. However, many other methods have been proposed to decompose time series in its inherent components, not only considering linear additive models. For instance, models can have all terms multiplicative (E*T*S), or combinations between additive and multiplicative terms (e.g. E*T+S). The different combinations of potential model structures results in the 30 different models tested here. As selection criterion, I used the Akaike information criterion (AIC), which selects the best model according to goodness of fit and the complexity of the model, given preference to the simplest model that can best predict the observations. 
+
+When the data contains zeros or negative values, the multiplicative error models in the ETS framework are not numerically stable \citep{Hyndman2008}. For this reason, I used the radiocarbon series as \emph{absolute fraction modern} $F'$ in all computations \citep{Trumbore2016}, which expresses $\Delta^{14}$C values as a fraction by the relation
+
+\begin{equation}
+\Delta^{14} \text{C} = (F' -1) \cdot 1000,
+\end{equation}
+and can also be interpreted as fraction modern $F$ corrected for radioactive decay of the OX1 standard since 1950. More precisely, 
+
+\begin{equation}
+F' = F \cdot \exp((1950-x)/8267),
+\end{equation}
+where $x$ is the year of sample collection and measurement. 
+
+
+ETS models predict observations $y_t$ according to a function of the error, trend, and seasonal components $f(E, T, S)$. The trend component is also split between a level $l$ and a growth term $b$. The error term $\varepsilon$ is considered a Gaussian white-noise process with variance $\sigma^2$. The mean value of the observations is therefore predicted by a function
+
+\begin{equation}
+\mu_t = f(l, b, s, \theta),
+\end{equation}
+where $s$ is the seasonal trend and $\theta$ are a set of constant parameters that weigh the contributions from the different components. Parameter estimation is performed by 
+maximum likelihood. 
+
+Forecasting is performed by recursively applying the ETS model $h$ number of steps ahead the last observation. Specific details about the method and its implementation in the R package {\tt forecast} are provided in \citet{Hyndman2008} and \citet{Hyndman2008JSS}, respectively. In the supplementary material I provide all code necessary to reproduce the results presented here.
+
+\subsection{Radiocarbon in local air}
+I also used radiocarbon analyses of annual plants to infer the atmospheric radiocarbon concentration in a set of cities around the world. Annual plants incorporate local sources of carbon dioxide during the growing season, providing an integrated measure of the radiocarbon concentration of the local air \citep{Hsueh2007GRL}. For consistency, I sampled at each location at least three individuals of dandelion ({\it Taraxacum spp.}), an annual plant that can be found growing in most cities. For comparison, I also sampled plants at locations with low influence of anthropogenic fossil fuel emissions such as the Rocky Mountain National Park (RMNP) in the USA, the Austrian Alps, and in the Amazon basin at the town of Leticia, Colombia. Plants were washed and air-dried after sampling to eliminate contamination from dust and other particles.   All samples were then oven-dried at 70$^{\circ}$ Celsius and ground in a ball-grinder at the Max Planck Institute for Biogeochemistry in Jena, Germany. Radiocarbon analyses were conducted by Accelerator Mass Spectrometry at the same institution \citep{Steinhof2004Radiocarbon}. 
+
+\section{Results}
+\subsection{Time series decomposition}
+From the 30 different competing models, the best performance was obtained by an ETS model of the form: (M,A,M), which means that the 
+error and the seasonal terms are multiplicative, and the trend term is additive. Specifically, for both hemispheric curves the model with
+the best AIC had the form:
+
+\begin{align}
+\mu_t &= (l_{t-1} + b_{t-1}) s_{t-m}, \notag \\
+l_t &= (l_{t-1} + b_{t-1}) (1 + \alpha \varepsilon_t), \notag \\
+b_t &= b_{t-1} + \beta (l_{t-1} + b_{t-1})\varepsilon_t , \notag \\
+s_t &= s_{t-m} (1+ \gamma \varepsilon_t), \notag
+\end{align}
+where $\alpha$, $\beta$, and $\gamma$ are constant parameters, and  the $t-m$ subscript represents the intra-annual time-step that composes the seasonal cycle of the seasonal term $s$. 
+
+For the northern hemisphere time series, the value of the parameters were $\theta_{NH}: (\alpha = 0.7551, \beta = 0.0346, \gamma = 0.0001)$; and for the southern hemisphere $\theta_{SH} : (\alpha = 0.2504, \beta = 0.0086, \gamma = 0.0001)$. Notice that the main differences among the two models are on the parameters $\alpha$ and $\beta$ that control the degree by which the error term influence the level and growth terms, respectively. This implies that for the northern hemisphere, the level and the growth terms showed more variability than in the southern hemispheres (Figure \ref{fig:SlopeSeason}). The seasonal term had very little influence from the error term as predicted by  $\gamma$, therefore the seasonal cycle obtained from this model had a very regular pattern. 
+
+The temporal pattern of the growth term $b_t$ was relatively similar between the northern and the southern hemispheres (Figure \ref{fig:SlopeSeason}b), but the curve for the level term was always lower for the northern hemisphere, which results in a larger decline of atmospheric radiocarbon for the north (Figure \ref{fig:SlopeSeason}a). For the last years in both time series, from 2005 to 2011,
+the annual decline in atmospheric radiocarbon in $\Delta^{14}$C was below -5 $\permil$ in both hemispheres, but with relatively high uncertainty  as  accounted by the $\varepsilon$ term (Table \ref{tab:slopes}).
+
+
+Since the seasonal pattern is a multiplicative term centered around 1, the absolute amplitude of the seasonal cycle is predicted to decline in this model for both hemispheres, but proportionally to the actual radiocarbon concentration in the atmosphere. The lower the value of the trend ($l + b$) the lower the amplitude of the term $\mu_t$. The model predicts a higher influence of the seasonal term for the northern than for the southern hemisphere.
+The model also predicts, as previously reported \citep{Levin2010Tellus, Currie2011}, a reversed seasonality between the northern and the southern hemispheres (Figure \ref{fig:SlopeSeason}c). 
+
+%\begin{figure}[htbp]
+%   \centering
+%   \includegraphics[scale=0.7]{Figures/SlopeSeason} % requires the graphicx package
+%   \caption{Trend (level and slope) and seasonality of the atmospheric radiocarbon time series predicted by the best-fit model for the hemispheric series compiled by \citet{Hua2013Radiocarbon}. For both series the best model selected based on the AIC was an ETS model of the form (M,A,M), i.e. a multiplicative term for the error, an additive term for the trend, and a multiplicative term for the seasonality. }
+%   \label{fig:SlopeSeason}
+%\end{figure}
+%
+\subsection{Forecast}
+A forecast of the atmospheric radiocarbon time series was obtained by exponential smoothing of the ETS model, i.e. recursively applying the set of equations with the best parameter values found \citep{Hyndman2008}. The forecast was obtained on quarterly intervals and not on a monthly basis since the multiplicative error term strongly influences uncertainty bounds in predictions at short-time scales. This is a relatively well-known issue in forecasting methods \citep{Athanasopoulos}, and it is commonly recommended to produce forecasts at an intermediate time-scale such as every four months in long-term monthly time-series \citep{Nijman1990, Rossana1995, Athanasopoulos}. 
+
+For the two series, the forecast of the average radiocarbon values showed a linear decrease for the next 20 years (Figure \ref{fig:Forecast}). This linear decline is based on the observed stabilization of the growth term of the time series (Figure \ref{fig:SlopeSeason}a). The range of the prediction intervals increases in all series because of the nature of the exponential smoothing model that assigns less weight to successively older observations and therefore the uncertainty in the predictions increases. 
+
+Atmospheric radiocarbon is predicted to decline faster in the northern hemisphere than in the southern hemisphere, therefore it is more likely that radiocarbon values return to pre-1950 values earlier in the northern hemisphere. Uncertainty ranges are also higher for the northern than for the southern hemisphere as a consequence of higher values of the parameters $\alpha$ and $\beta$ from the ETS model.
+
+Independent observations of atmospheric radiocarbon from European stations at the Schauinsland and Jungfraujoch sites \citep{Levin2013Tellus}, are within forecast uncertainty range for the northern hemisphere (Figure \ref{fig:ForecastEurope}a). The observations from Jungfraujoch follow relatively well the forecasted mean and the seasonal cycle; however for Schauinsland, the independent observations are below the forecasted mean. 
+One likely explanation for this difference in the Schauinsland station, is the potential contribution of fossil-fuel derived carbon from the nearby city of Freiburg, Germany \citep{Levin1989Radiocarbon, Turnbull2009JGR, Levin2013Tellus}.
+
+%\begin{figure}[htbp]
+%   \centering
+%   \includegraphics[scale=0.7]{Figures/Forecast} % requires the graphicx package
+%   \caption{Forecast of atmospheric radiocarbon for the northern and southern hemispheres based on the best ETS model. Shaded regions in gray and blue show the 95 and 80\% prediction intervals. }
+%   \label{fig:Forecast}
+%\end{figure}
+
+To predict the decline in atmospheric radiocarbon for central Europe based on the Jungfraujoch and Schauinsland stations, I ran a forecast selecting the ETS model that best matches the observations reported in \citet{Levin2013Tellus} (Figure \ref{fig:ForecastEurope}b). In this forecast, the rate of radiocarbon decline is faster, and mean atmospheric radiocarbon crosses the $\Delta^{14}$C = 0 $\permil$ threshold much earlier.
+
+%\begin{figure}[htbp]
+%   \centering
+%   \includegraphics[scale=0.7]{Figures/ForecastEurope} % requires the graphicx package
+%   \caption{a) Forecast (with 80 and 95\% prediction intervals) for the northern hemisphere radiocarbon curve compared to observations at the Jungfraujoch and Schauinsland reported in \citet{Levin2013Tellus}. b) Optimized forecast for central Europe forcing the model to pass through the observations from these two stations.}
+%   \label{fig:ForecastEurope}
+%\end{figure}
+
+Atmospheric radiocarbon is expected to return to pre-1950s levels within the next decades with different probabilities for the different hemispheres. Values of $\Delta^{14}$C $\leq 0 \permil$ are within 95\% prediction intervals of the forecast starting as early as 2016 for the northern hemisphere, and 2025 for the southern hemisphere. For central Europe, it is very likely ($> 90$\% probability) that the $\Delta^{14}$C $\leq 0 \permil$ threshold is being crossed by summer 2018.
+
+
+%\begin{figure}[htbp]
+%   \centering
+%   \includegraphics[scale=0.7]{Figures/Prob} % requires the graphicx package
+%   \caption{Probability of $\Delta^{14}$C $\leq 0 \permil$ for the different hemispheric zones calculated as 100 minus different probability levels of the lower prediction interval for each forecast time. As a reference, 20 and 5\% probability levels are presented in dashed and dotted lines, respectively.}
+%   \label{fig:Prob}
+%\end{figure}
+
+Although the hemispheric averages of background air are expected to return to pre-1950 levels within the next decades, this threshold has been already crossed locally in major cities around the world (Figure \ref{fig:Cities}, Table \ref{tab:cities}). Air in metropolitan areas with high fossil-fuel emission levels such as Medell\'in, Stockholm, and the Newport Beach area in California show the highest influence of fossil-fuel derived carbon. 
+Air in European cities such as Berlin and Prague had not crossed the pre-1950 level yet, but Jerusalem was in the limit in 2014 ($-0.1 \pm 2.4$ \permil). As expected, the high altitude samples from the Austrian Alps are very close to the forecasted global values, whereas the samples from Rocky Mountain National Park were much below the forecasted global average, but within the 95\% prediction interval of the forecast.
+
+%\begin{figure}[htbp]
+%   \centering
+%   \includegraphics[scale=0.7]{Figures/Cities} % requires the graphicx package
+%   \caption{Forecasted northern hemisphere atmospheric radiocarbon concentrations (with 80 and 95\% prediction intervals), based on data from \citet{Hua2013Radiocarbon}, superimposed with radiocarbon concentration measured in plants growing on different industrial cities and remote areas without fossil fuel influence. This radiocarbon concentration represents the mix of fossil-fuel derived carbon and the mixing with background air. }
+%   \label{fig:Cities}
+%\end{figure}
+
+
+\section{Discussion}
+The time series decomposition presented here shows properties of the trend, slope, and seasonality of atmospheric radiocarbon for different hemispheric zones that complements previous analyses based on sets of individual stations \citep{Levin2010Tellus, Graven2012JGR, Levin2013Tellus} and global carbon models \citep{Caldeira1998GRL, Randerson2002GBC, Turnbull2009JGR, Levin2010Tellus, Graven2015PNAS}. One main advantage of this analysis is the use of the harmonized series compiled by \citet{Hua2013Radiocarbon}, which provide a spatial average across the different stations from which atmospheric radiocarbon has been measured. The series also resolve issues of temporal gaps for the individual stations, and give a comprehensive overview of the dynamic behavior of atmospheric radiocarbon in background air during the past 40 years for the two hemispheres. 
+
+The series decomposition analyses showed that the overall decline of atmospheric radiocarbon was higher in the northern hemisphere than in the southern hemisphere. This is not surprising because the large levels of fossil-fuel emissions in the northern hemisphere are expected to significantly dilute atmospheric radiocarbon \citep{Levin1989Radiocarbon, Levin2010Tellus, Turnbull2009JGR, Graven2012JGR}. Rates of decline since 2005 have been below $ -5 \permil$ per year. This implies that if rates of decline continue decreasing, they may pose significant challenges for detecting annual trends in atmospheric radiocarbon given that the uncertainty in new generation AMS systems is between 3 to 2$\permil$ \citep{Synal2007, Wacker2010}.
+
+Atmospheric radiocarbon is expected to return to pre-1950 levels in the northern hemisphere by 2020, the year predicted by  \citet{Caldeira1998GRL}, with a probability $\sim$20\% (Figure \ref{fig:Prob}). In the southern hemisphere however, it is unlikely that atmospheric radiocarbon reach values below 0 $\permil$ by 2020. Based on more recent observations from central Europe, the pre-1950 threshold may be crossed with high probability ($>$90\%) by summer 2018 (Figure \ref{fig:Prob}). 
+
+It is not possible to attribute any particular process that may contribute to the observed trends in the data with this statistical approach. However, previous analyses \citep{Caldeira1998GRL, Randerson2002GBC, Levin2013Tellus, Currie2011} may help to explain some of the properties of the observed time series. For instance, different processes are responsible for determining atmospheric radiocarbon content: fossil fuel emissions, ocean-atmosphere exchange, stratosphere-troposphere mixing, terrestrial ecosystem fluxes, emissions from nuclear industry, and cosmogenic production \citep{Oeschger1975Tellus, Randerson2002GBC, Naegler2006, Levin2010Tellus, Graven2015PNAS}. The recent slower rates of decline in the northern hemisphere may be explained by the contribution of the terrestrial biosphere and oceans that return decades-old bomb radiocarbon and therefore counterbalance the effect of increased fossil fuel emissions \citep{Caldeira1998GRL, Randerson2002GBC, Currie2011}. For the southern hemisphere, ocean-atmosphere exchange plays a larger role, and the slow in radiocarbon decline in recent years may be explained by return of bomb radiocarbon by the mixed layer \citep{Currie2011}.
+
+The combined effect of terrestrial biosphere, ocean exchange, fossil-fuel emissions as well as horizontal and vertical air transport may have an important contribution in reducing the amplitude of the seasonal cycle \citep{Levin2010Tellus}. The best ETS model identified here predicts the seasonal cycle as proportional to the trend term; i.e. the higher the amount of radiocarbon in the atmosphere the higher the amplitude of the seasonal cycle, and as radiocarbon content decline in both hemispheres so does its seasonality. Given that the growth term of the series had stabilized in the recent decade, the amplitude of the seasonal cycle had remained constant in the last part of the curve. These results are consistent with model predictions by \citet{Randerson2002GBC}, who predicted a decline in seasonality over time due to decrease in seasonality in ocean and terrestrial biosphere exchange, with strong contributions from fossil-fuel signals. 
+
+%\citet{Randerson2002GBC} predicted a decline in the seasonality of atmospheric radiocarbon as a consequence of a time-lag in the terrestrial biosphere respiring pre-modern carbon, but the decline in seasonality occurs much faster in their model predictions than in the series decomposition presented here. One possible explanation is that mean transit times of carbon in the terrestrial biosphere are much longer than those considered by \citet{Randerson2002GBC} in their analysis. 
+%Another possible explanation is that fossil-fuel emissions in the northern hemisphere consistently dilute the radiocarbon signal of the respired C from the terrestrial biosphere in the summer months depending on the phase-lag between these two processes. Alternatively, processes related to stratosphere-troposphere exchange may help to explain this decline in seasonality. These hypotheses however, require further examination.
+
+\citet{Caldeira1998GRL}, and more recently \citet{Graven2015PNAS}, predicted that in a business-as-usual scenario of fossil-fuel emissions, radiocarbon content would return to pre-1950 levels by $\sim$2020. Current trajectories of atmospheric radiocarbon seem to agree with this prediction, but with important differences among hemispheric regions. The $\Delta^{14}$C $\leq 0 \permil$ threshold would be crossed in the northern hemisphere with higher probability than in the southern hemisphere, which may be a consequence of differences in contributions between the terrestrial biosphere and the oceans, the later being more relevant for the southern hemisphere. 
+It is also likely that the rate of decline of atmospheric radiocarbon in the northern hemisphere may increase in the future (become more negative) if the previously sequestered bomb-radiocarbon is exhausted, and then fossil-fuel derived carbon may have a larger influence in the northern hemisphere. This is clearly illustrated in the urban areas we analyzed where fossil-fuel emissions dominate over terrestrial exchange  and therefore radiocarbon is close or have already crossed the $\Delta^{14}$C $\leq 0 \permil$ threshold. 
+
+The forecasted atmospheric radiocarbon curves presented here may be useful for different studies where data on the atmospheric background is not available after the latest release of the compiled curves \citep{Hua2013Radiocarbon}. The methodology of time-series decomposition and forecast may also be useful to produce forecasts for individual stations or for new releases of compiled curves. However, care must be taken in using these forecasts in different applications, and prediction uncertainties must always be considered.
+Possible changes in the rates of decline of atmospheric radiocarbon for the different hemispheres may deviate in the future from the rates calculated in the time-series decomposition presented here. Therefore, these forecasted radiocarbon trends must be used with caution.
+
